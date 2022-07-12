@@ -60,4 +60,8 @@ public class User {
     public String toString(){
         return "ID: " + getId() + ", Nombre: " + getNombre() + ", Email: " + getEmail() + ", Password: " + getPassword();
     }
+
+    public String toTextField(){
+        return "Nombre: " + getNombre() + ", Email: " + getEmail();
+    }
 }

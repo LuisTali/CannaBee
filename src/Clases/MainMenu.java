@@ -14,22 +14,26 @@ public class MainMenu extends JFrame {
     private JPanel Bancos;
     private JButton logInButton;
     private JTextField UsuarioInfo;
-    public static User usuario = new User();
+    private User usuario = new User();
 
     public MainMenu() {
         super("MainMenu.exe");
         setContentPane(MainMenuPane);
         setMinimumSize(new Dimension(750, 750));
+        setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
 
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LogIn logIn = new LogIn(null);
+                logIn.setUser(usuario);
+                dispose();
             }
         });
-        setVisible(true);
+        setVisible(false); //Para que al realizar el LogIn no se abra y cierre automaticamente.
     }
 
     public void setText(String t){
