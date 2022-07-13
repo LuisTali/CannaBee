@@ -1,10 +1,11 @@
 package Clases;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class HashMapGen <K,V>{
+public class HashMapGen <K,V> implements Serializable {
     private K key;
     private V value;
     private HashMap <K,V> hashMap;
@@ -33,11 +34,18 @@ public class HashMapGen <K,V>{
         hashMap.clear();
     }
 
+    public boolean containsKey(K key){
+        if (hashMap.containsKey(key)) return true;
+        else return false;
+    }
+
     public V elementByKey(K key){
         if (hashMap.containsKey(key))
             return hashMap.get(key);
         else return null;
     }
+
+    public K getKey(){return key;}
 
     public String mostrar(){
         StringBuilder buffer = new StringBuilder();

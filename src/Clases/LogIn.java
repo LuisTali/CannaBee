@@ -25,7 +25,7 @@ public class LogIn extends JDialog {
         setContentPane(LogInPanel);
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
-        setMinimumSize(new Dimension(600,500));
+        setMinimumSize(new Dimension(600, 500));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         registerButton.addActionListener(new ActionListener() {
@@ -38,32 +38,26 @@ public class LogIn extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainMenu mm = new MainMenu();
-                user = con.autentificar(emailField.getText(),passwordField.getPassword());
-                if (user != null){
-                    JOptionPane.showMessageDialog(null,"Inicio de Sesion Satisfactorio");
-                    mm.setUser(user);
-                    mm.setText(user.toTextField());
-                    mm.setVisible(true);
-                    dispose();
-                } else JOptionPane.showMessageDialog(null,"Error en Inicio de Sesion");
+                user = con.autentificar(emailField.getText(), passwordField.getPassword());
+                if (user != null) {
+                    JOptionPane.showMessageDialog(null, "Inicio de Sesion Satisfactorio");
+                    mainMenuCreationLogic(mm);
+                } else JOptionPane.showMessageDialog(null, "Error en Inicio de Sesion");
             }
         });
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainMenu mm = new MainMenu();
-                if (user != null){
-                    mm.setUser(user);
-                    mm.setText(user.toTextField());
+                if (user != null) {
+                    mainMenuCreationLogic(mm);
                 }
-                mm.setVisible(true);
-                dispose();
             }
         });
         setVisible(true);
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 
@@ -71,7 +65,16 @@ public class LogIn extends JDialog {
         this.user = user;
     }
 
-    public void showRegister(){
+    public void mainMenuCreationLogic(MainMenu mm){
+        mm.setUser(user);
+        mm.setText(user.toTextField());
+        if (mm.checkUserGens())
+            mm.listarGensUser();
+        mm.setVisible(true);
+        dispose();
+    }
+
+    public void showRegister() {
         Register register = new Register(null);
     }
 }
