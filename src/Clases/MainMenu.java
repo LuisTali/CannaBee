@@ -5,8 +5,7 @@ import UserRelated.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class MainMenu extends JFrame {
         super("MainMenu.exe");
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
         setContentPane(MainMenuPane);
-        setMinimumSize(new Dimension(750, 750));
+        setMinimumSize(new Dimension(600, 550));
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -71,6 +70,23 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cbSyst.cepasToFile();
                 dispose();
+            }
+        });
+
+        logInButton.addMouseListener(new MouseAdapter() { //Al pasar mouse por encima del boton logIn hace esto.
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                logInButton.setBackground(new Color(246,246,255));
+                logInButton.setForeground(new Color(0,0,0));
+            }
+        });
+        logInButton.addMouseListener(new MouseAdapter() { //Al quitar el mouse de encima del boton logIn hace esto.
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                logInButton.setBackground(new Color(0,0,0));
+                logInButton.setForeground(new Color(246,246,255));
             }
         });
     }

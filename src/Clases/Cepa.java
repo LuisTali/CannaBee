@@ -52,4 +52,8 @@ public class Cepa implements Serializable {
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
+
+    public String toString(){
+        return "Nombre: " + getNombre() + ", THC: " + getThc();
+    }
 }

@@ -34,7 +34,7 @@ public class CannaBeeSystem {
             createFolder(fl);
             FileOutputStream fo = new FileOutputStream(fl);
             ObjectOutputStream oO = new ObjectOutputStream(fo);
-            int cont = 0;
+            int cont = 1;
             while (cont <= cepasUser.hSize()) {
                 oO.writeObject(cepasUser.elementByKey(cont));
                 cont++;
