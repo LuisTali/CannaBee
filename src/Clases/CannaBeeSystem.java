@@ -1,27 +1,54 @@
 package Clases;
 
 import java.io.*;
+import java.security.Key;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class CannaBeeSystem {
-    //HashMapGen <String,Cepa> registroCepas = new HashMapGen<>();
-    HashMapGen<Integer, HashMapGen> cepasUser = new HashMapGen<>();
+    HashMapGen<Integer, HashMapGen<String, Cepa>> cepasUser = new HashMapGen<>();
+    HashMapGen <String, HashMapGen<String, Cepa>> cepasBancos = new HashMapGen<>();
+    Connect con = new Connect();
 
     public void agregarCepaUser(Integer id, Cepa c) {
         if (cepasUser.containsKey(id)) {
             cepasUser.elementByKey(id).añadir(c.getNombre(), c);
+            System.out.println("ID ya creado: " + id);
         } else {
-            cepasUser.añadir(id, new HashMapGen<String, Cepa>());
-            cepasUser.elementByKey(id).añadir(c.getNombre(), c);
+            HashMapGen<String, Cepa> registroCepas = new HashMapGen<>();
+            registroCepas.añadir(c.getNombre(), c);
+            System.out.println("ID Creado: " + id);
+            cepasUser.añadir(id, registroCepas);
         }
+    }
+
+    public void agregarCepaBanco(String key, Cepa c){
+        if (cepasBancos.containsKey(key)){
+            cepasBancos.elementByKey(key).añadir(c.getNombre(),c);
+            System.out.println("Banco ya creado: " + key);
+        } else {
+            HashMapGen<String,Cepa> registroCepas = new HashMapGen<>();
+            registroCepas.añadir(c.getNombre(),c);
+            System.out.println("Banco Creado: " + key);
+            cepasBancos.añadir(key,registroCepas);
+        }
+    }
+
+    public boolean cepasListIsEmpty(){
+        if (cepasUser.hSize()>0)return false;
+        else return true;
     }
 
     public boolean cepasUserIsEmpty(int id) {
         if (cepasUser.hSize() > 0)
-            return cepasUser.elementByKey(id).hSize() == 0;
+            if (cepasUser.elementByKey(id).hSize() > 0) return false;
+            else return true;
         else return false;
+    }
+
+    public Iterator getUserCepasListIterator() {
+        return cepasUser.getIterator();
     }
 
     public Iterator getCepasUserIterator(int id) {
@@ -29,20 +56,22 @@ public class CannaBeeSystem {
     }
 
     public void cepasToFile() {
-        try {
-            File fl = new File("Data/GensUser.bin");
-            createFolder(fl);
-            FileOutputStream fo = new FileOutputStream(fl);
-            ObjectOutputStream oO = new ObjectOutputStream(fo);
-            int cont = 1;
-            while (cont <= cepasUser.hSize()) {
-                oO.writeObject(cepasUser.elementByKey(cont));
-                cont++;
+        if (cepasUser.hSize() > 0) {
+            try {
+                File fl = new File("Data/GensUser.bin");
+                createFolder(fl);
+                FileOutputStream fo = new FileOutputStream(fl);
+                ObjectOutputStream oO = new ObjectOutputStream(fo);
+                System.out.println("Cargando archivo");
+                System.out.println(cepasUser.mostrar());
+                oO.writeObject(cepasUser);
+                System.out.println("Mapa cargado");
+                oO.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            oO.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } else System.out.println("Mapa Cepas Vacio"); //Borrar luego los sout del System.
+
     }
 
     public void cepasReadFile() {
@@ -53,19 +82,11 @@ public class CannaBeeSystem {
                 ObjectInputStream oI = new ObjectInputStream(fI);
                 int lectura = 1;
                 while (lectura == 1) {
-                    HashMapGen<Integer, HashMapGen> aux = (HashMapGen<Integer, HashMapGen>) oI.readObject();
+                    HashMapGen<Integer, HashMapGen<String, Cepa>> aux = (HashMapGen<Integer, HashMapGen<String, Cepa>>) oI.readObject();
                     System.out.println("Archivo siendo leido");
-                    if (aux != null){
-                        System.out.println(aux.mostrar());
-                        cepasUser.añadir(aux.getKey(), aux);
-                        int auxK = aux.getKey();
-                        Iterator it = getCepasUserIterator(auxK);
-                        while (it.hasNext()) {
-                            Map.Entry entry = (Map.Entry) it.next();
-                            Cepa c = (Cepa) entry.getValue();
-                            System.out.println("Valor " + c.toString());
-                            agregarCepaUser(auxK, (Cepa) entry.getValue());
-                        }
+                    if (aux != null) {
+                        //System.out.println(aux.mostrar()); Borrar linea luego.
+                        cepasUser = aux;
                     }
                 }
                 oI.close();

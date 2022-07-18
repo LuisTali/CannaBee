@@ -79,6 +79,27 @@ public class Connect {
         return usuario;
     }
 
+    public String returnIDKeys(){
+        StringBuilder buffer = new StringBuilder();
+        Connection con;
+        String sql = "SELECT * FROM usuarios";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                buffer.append(rs.getInt(1));
+                buffer.append(" ");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return buffer.toString();
+    }
+
     public void desconnection(){
         con = null;
     }

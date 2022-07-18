@@ -35,6 +35,10 @@ public class MainMenu extends JFrame {
     private JLabel editarLabel;
     private JTextArea commentsEditArea;
     private JButton xButton;
+    private JButton comprarButton;
+    private JTextField textField1;
+    private JTable table1;
+    private JButton cargarBancoDeGeneticasButton;
     private User usuario = new User();
     CannaBeeSystem cbSyst = new CannaBeeSystem();
 
@@ -47,6 +51,8 @@ public class MainMenu extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         commentsArea.setLineWrap(true); //Corta la palabra al escribir y llegar al final en el TextArea Comments.
+        // if (usuario.getId() > 0)
+        //    listarGensUser(); Al invocar el metodo desde el LogIn estas lineas quedan obsoletas.
 
         logInButton.addActionListener(new ActionListener() {
             @Override
@@ -56,7 +62,6 @@ public class MainMenu extends JFrame {
                 dispose();
             }
         });
-        //setVisible(false); //Para que al realizar el LogIn no se abra y cierre automaticamente. Creo que no hace falta ya que viene default en False.
 
         agregarGen.addActionListener(new ActionListener() {
             @Override
@@ -87,6 +92,18 @@ public class MainMenu extends JFrame {
                 super.mouseExited(e);
                 logInButton.setBackground(new Color(0,0,0));
                 logInButton.setForeground(new Color(246,246,255));
+            }
+        });
+        TabbedMenu.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                if (usuario.getId()<=0){
+                    TabbedMenu.remove(geneticasPane);
+                }
+                if (!usuario.isAdmin()){
+                    bancosPane.remove(cargarBancoDeGeneticasButton);
+                }
             }
         });
     }

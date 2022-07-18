@@ -45,6 +45,10 @@ public class HashMapGen <K,V> implements Serializable {
         else return null;
     }
 
+    public V getValue(){
+        return value;
+    }
+
     public K getKey(){return key;}
 
     public String mostrar(){

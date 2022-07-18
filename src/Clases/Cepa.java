@@ -54,6 +54,6 @@ public class Cepa implements Serializable {
     }
 
     public String toString(){
-        return "Nombre: " + getNombre() + ", THC: " + getThc();
+        return "Nombre: " + getNombre() + ", THC: " + getThc() + ", Raza: " + getRaza() +  "\n";
     }
 }
