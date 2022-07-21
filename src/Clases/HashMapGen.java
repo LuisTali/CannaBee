@@ -15,11 +15,11 @@ public class HashMapGen <K,V> implements Serializable {
     }
 
     public void añadir(K key, V value){
-        if (!hashMap.containsKey(key)) hashMap.put(key,value);
+        hashMap.put(key,value);
     }
 
     public void eliminar(K key){
-        if (!hashMap.containsKey(key)) hashMap.remove(key);
+        if (hashMap.containsKey(key)) hashMap.remove(key);
     }
 
     public Iterator getIterator(){

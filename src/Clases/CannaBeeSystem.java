@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CannaBeeSystem {
     HashMapGen<Integer, HashMapGen<String, Cepa>> cepasUser = new HashMapGen<>();
-    HashMapGen <String, HashMapGen<String, Cepa>> cepasBancos = new HashMapGen<>();
+    HashMapGen<String, HashMapGen<String, Cepa>> cepasBancos = new HashMapGen<>();
     Connect con = new Connect();
 
     public void agregarCepaUser(Integer id, Cepa c) {
@@ -23,20 +23,35 @@ public class CannaBeeSystem {
         }
     }
 
-    public void agregarCepaBanco(String key, Cepa c){
-        if (cepasBancos.containsKey(key)){
-            cepasBancos.elementByKey(key).añadir(c.getNombre(),c);
+    public void agregarCepaBanco(String key, Cepa c) {
+        if (cepasBancos.containsKey(key)) {
+            cepasBancos.elementByKey(key).añadir(c.getNombre(), c);
             System.out.println("Banco ya creado: " + key);
         } else {
-            HashMapGen<String,Cepa> registroCepas = new HashMapGen<>();
-            registroCepas.añadir(c.getNombre(),c);
+            HashMapGen<String, Cepa> registroCepas = new HashMapGen<>();
+            registroCepas.añadir(c.getNombre(), c);
             System.out.println("Banco Creado: " + key);
-            cepasBancos.añadir(key,registroCepas);
+            cepasBancos.añadir(key, registroCepas);
         }
     }
 
-    public boolean cepasListIsEmpty(){
-        if (cepasUser.hSize()>0)return false;
+    public void eliminarCepa(int id, String nombre){
+        if (cepasUser.containsKey(id)){
+             cepasUser.elementByKey(id).eliminar(nombre);
+        }
+    }
+
+    public void editCepa(int id, String nombre, double thc, String raza, String comments) {
+        Cepa aux = null;
+        if (comments != null) aux = new Cepa(nombre, raza, thc, comments);
+        else aux = new Cepa(nombre, raza, thc);
+        HashMapGen<String, Cepa> auxH = cepasUser.elementByKey(id);
+        if (auxH.containsKey(aux.getNombre()))
+            cepasUser.elementByKey(id).elementByKey(nombre); //Finiquitar.
+    }
+
+    public boolean cepasListIsEmpty() {
+        if (cepasUser.hSize() > 0) return false;
         else return true;
     }
 

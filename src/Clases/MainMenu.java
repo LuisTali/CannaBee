@@ -32,13 +32,16 @@ public class MainMenu extends JFrame {
     private JLabel buscarLabel;
     private JTextField razaEditField;
     private JTextField thcEditField;
-    private JLabel editarLabel;
     private JTextArea commentsEditArea;
     private JButton xButton;
-    private JButton comprarButton;
+    private JButton COMPRARButton;
     private JTextField textField1;
     private JTable table1;
     private JButton cargarBancoDeGeneticasButton;
+    private JLabel cantComprarLabel;
+    private JButton button1;
+    private JButton EDITARButton;
+    private JButton CONFIRMARButton;
     private User usuario = new User();
     CannaBeeSystem cbSyst = new CannaBeeSystem();
 
@@ -46,7 +49,7 @@ public class MainMenu extends JFrame {
         super("MainMenu.exe");
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
         setContentPane(MainMenuPane);
-        setMinimumSize(new Dimension(600, 550));
+        setMinimumSize(new Dimension(650, 650));
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -82,33 +85,69 @@ public class MainMenu extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                logInButton.setBackground(new Color(246,246,255));
-                logInButton.setForeground(new Color(0,0,0));
+                logInButton.setBackground(new Color(246, 246, 255));
+                logInButton.setForeground(new Color(0, 0, 0));
             }
         });
         logInButton.addMouseListener(new MouseAdapter() { //Al quitar el mouse de encima del boton logIn hace esto.
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                logInButton.setBackground(new Color(0,0,0));
-                logInButton.setForeground(new Color(246,246,255));
+                logInButton.setBackground(new Color(0, 0, 0));
+                logInButton.setForeground(new Color(246, 246, 255));
             }
         });
         TabbedMenu.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                if (usuario.getId()<=0){
+                if (usuario.getId() <= 0) {
                     TabbedMenu.remove(geneticasPane);
                 }
-                if (!usuario.isAdmin()){
+                if (!usuario.isAdmin()) {
                     bancosPane.remove(cargarBancoDeGeneticasButton);
                 }
             }
         });
+        EDITARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSelect = gensTable.getSelectedRow();
+                if (filaSelect == -1) JOptionPane.showMessageDialog(null, "Elija una genetica a modificar!");
+                else {
+                    nombreEditField.setText((String) gensTable.getValueAt(filaSelect, 0));
+                    razaEditField.setText((String) gensTable.getValueAt(filaSelect, 1));
+                    double thcAux = (double) gensTable.getValueAt(filaSelect, 2);
+                    thcEditField.setText(String.valueOf(thcAux));
+                    commentsEditArea.setText((String) gensTable.getValueAt(filaSelect, 3));
+                }
+            }
+        });
+        CONFIRMARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int auxID = usuario.getId();
+                String auxNombrePrim = (String) gensTable.getValueAt(gensTable.getSelectedRow(), 0);
+                String auxNombre = nombreEditField.getText();
+                double auxThc = Double.parseDouble(thcEditField.getText());
+                String auxRaza = razaEditField.getText();
+                String auxComments = commentsEditArea.getText();
+                Cepa auxCepa = null;
+                if (auxComments.equals(""))
+                    auxCepa = new Cepa(auxNombre, auxRaza, auxThc);
+                else auxCepa = new Cepa(auxNombre, auxRaza, auxThc, auxComments);
+                if (auxNombre.equals(auxNombrePrim))  //Si usaria ID en las Cepas podria modificar nombre sin eliminarla del HashMap previamente.
+                    cbSyst.agregarCepaUser(auxID, auxCepa);
+                else {
+                    cbSyst.eliminarCepa(auxID, auxNombrePrim);
+                    cbSyst.agregarCepaUser(auxID, auxCepa);
+                }
+                listarGensUser();
+            }
+        });
     }
 
-    public boolean checkUserGens(){
+    public boolean checkUserGens() {
         return cbSyst.cepasUserIsEmpty(usuario.getId());
     }
 
@@ -133,11 +172,11 @@ public class MainMenu extends JFrame {
             }
         };
         Iterator entries = cbSyst.getCepasUserIterator(usuario.getId());
-        while (entries.hasNext()){
+        while (entries.hasNext()) {
             Map.Entry entry = (Map.Entry) entries.next();
             String key = (String) entry.getKey();
             Cepa value = (Cepa) entry.getValue();
-            model.addRow(new Object[]{key,value.getRaza(),value.getThc(),value.getComentarios()});
+            model.addRow(new Object[]{key, value.getRaza(), value.getThc(), value.getComentarios()});
         }
         gensTable.setModel(model);
     }
