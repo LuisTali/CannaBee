@@ -3,10 +3,15 @@ package Clases;
 import java.io.Serializable;
 
 public class Cepa implements Serializable {
+    private int id;
     private String nombre;
     private String raza;
     private double thc;
     private String comentarios;
+    private String banco;
+
+    public Cepa() {
+    }
 
     public Cepa(String nombre, String raza, double thc) {
         this.nombre = nombre;
@@ -19,6 +24,19 @@ public class Cepa implements Serializable {
         this.raza = raza;
         this.thc = thc;
         this.comentarios = comentarios;
+    }
+
+    public Cepa(int id, String nombre, String raza, double thc, String comentarios, String banco) {
+        this.id = id;
+        this.nombre = nombre;
+        this.raza = raza;
+        this.thc = thc;
+        this.comentarios = comentarios;
+        this.banco = banco;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -37,6 +55,14 @@ public class Cepa implements Serializable {
         return comentarios;
     }
 
+    public String getBanco() {
+        return banco;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -53,7 +79,11 @@ public class Cepa implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public String toString(){
-        return "Nombre: " + getNombre() + ", THC: " + getThc() + ", Raza: " + getRaza() +  "\n";
+    public void setBanco(String banco) {
+        this.banco = banco;
+    }
+
+    public String toString() {
+        return "Nombre: " + getNombre() + ", THC: " + getThc() + ", Raza: " + getRaza() + "\n";
     }
 }

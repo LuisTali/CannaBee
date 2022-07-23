@@ -181,6 +181,16 @@ public class MainMenu extends JFrame {
         gensTable.setModel(model);
     }
 
+    public void listarGensBancos(){
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre","Raza","THC","Comentarios","Banco"},0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        Iterator entries =
+    }
+
     public void setText(String t) {
         UsuarioInfo.setText(t);
     }
