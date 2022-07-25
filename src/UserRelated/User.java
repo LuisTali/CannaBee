@@ -62,6 +62,6 @@ public class User {
     }
 
     public String toTextField(){
-        return "Nombre: " + getNombre() + ", Email: " + getEmail();
+        return "Bienvenido " + getNombre();
     }
 }

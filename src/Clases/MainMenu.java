@@ -1,5 +1,6 @@
 package Clases;
 
+import Forms.RegisterGenBank;
 import UserRelated.User;
 
 import javax.swing.*;
@@ -36,7 +37,7 @@ public class MainMenu extends JFrame {
     private JButton xButton;
     private JButton COMPRARButton;
     private JTextField textField1;
-    private JTable table1;
+    private JTable gensBankTable;
     private JButton cargarBancoDeGeneticasButton;
     private JLabel cantComprarLabel;
     private JButton button1;
@@ -47,12 +48,13 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
         super("MainMenu.exe");
+        modelarListas();
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
         setContentPane(MainMenuPane);
         setMinimumSize(new Dimension(650, 650));
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE); //Indica que sucede al cliquear el boton X.
         commentsArea.setLineWrap(true); //Corta la palabra al escribir y llegar al final en el TextArea Comments.
         // if (usuario.getId() > 0)
         //    listarGensUser(); Al invocar el metodo desde el LogIn estas lineas quedan obsoletas.
@@ -89,6 +91,7 @@ public class MainMenu extends JFrame {
                 logInButton.setForeground(new Color(0, 0, 0));
             }
         });
+
         logInButton.addMouseListener(new MouseAdapter() { //Al quitar el mouse de encima del boton logIn hace esto.
             @Override
             public void mouseExited(MouseEvent e) {
@@ -97,6 +100,7 @@ public class MainMenu extends JFrame {
                 logInButton.setForeground(new Color(246, 246, 255));
             }
         });
+
         TabbedMenu.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -109,6 +113,7 @@ public class MainMenu extends JFrame {
                 }
             }
         });
+
         EDITARButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,6 +128,7 @@ public class MainMenu extends JFrame {
                 }
             }
         });
+
         CONFIRMARButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -145,6 +151,13 @@ public class MainMenu extends JFrame {
                 listarGensUser();
             }
         });
+
+        cargarBancoDeGeneticasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                agregarGenBancoButtonLogic();
+            }
+        });
     }
 
     public boolean checkUserGens() {
@@ -162,6 +175,11 @@ public class MainMenu extends JFrame {
                 cbSyst.agregarCepaUser(usuario.getId(), aux);
             } else JOptionPane.showMessageDialog(null, "Verifique los campos obligatorios.");
         } else JOptionPane.showMessageDialog(null, "Funcion para usuarios logueados");
+    }
+
+    public void agregarGenBancoButtonLogic() {
+        RegisterGenBank rBank = new RegisterGenBank(null);
+        rBank.setVisible(true);
 
     }
 
@@ -181,14 +199,50 @@ public class MainMenu extends JFrame {
         gensTable.setModel(model);
     }
 
-    public void listarGensBancos(){
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre","Raza","THC","Comentarios","Banco"},0){
+    public void listarGensBancos() { //Comprobar correcto funcionamiento.
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios", "Banco"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        Iterator entries =
+        Iterator entries = cbSyst.getCepasBancosIterator();
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            String key = (String) entry.getKey();
+            Iterator entriesCepas = cbSyst.getCepasPorBancoIterator(key);
+            while (entriesCepas.hasNext()) {
+                Map.Entry entryCepa = (Map.Entry) entriesCepas.next();
+                String keyC = (String) entryCepa.getKey();
+                Cepa valueC = (Cepa) entryCepa.getValue();
+                model.addRow(new Object[]{key,valueC.getRaza(),valueC.getThc(),valueC.getComentarios(),valueC.getBanco()});
+            }
+        }
+        gensBankTable.setModel(model);
+    }
+
+    public void modelarListas() {
+        modelarListaGensUser();
+        modelarListaGensBancos();
+    }
+
+    public void modelarListaGensUser() {
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios"}, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        gensTable.setModel(model);
+    }
+
+    public void modelarListaGensBancos() {
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios", "Banco"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        gensBankTable.setModel(model);
     }
 
     public void setText(String t) {
@@ -201,5 +255,9 @@ public class MainMenu extends JFrame {
 
     public void setUser(User user) {
         usuario = user;
+    }
+
+    public CannaBeeSystem getCbSyst() {
+        return cbSyst;
     }
 }

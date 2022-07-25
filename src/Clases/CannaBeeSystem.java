@@ -70,6 +70,10 @@ public class CannaBeeSystem {
         return cepasUser.elementByKey(id).getIterator();
     }
 
+    public Iterator getCepasBancosIterator(){return cepasBancos.getIterator();}
+
+    public Iterator getCepasPorBancoIterator(String key){return cepasBancos.elementByKey(key).getIterator();}
+
     public void cepasToFile() {
         if (cepasUser.hSize() > 0) {
             try {

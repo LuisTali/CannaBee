@@ -160,7 +160,7 @@
                 <properties/>
                 <border type="line"/>
                 <children>
-                  <component id="c07ba" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="c07ba" class="javax.swing.JTable" binding="gensBankTable">
                     <constraints/>
                     <properties/>
                   </component>
@@ -408,6 +408,7 @@
           <background color="-16777216"/>
           <foreground color="-592129"/>
           <horizontalAlignment value="0"/>
+          <margin top="2" left="6" bottom="2" right="6"/>
           <selected value="false"/>
           <text value="Iniciar Sesion"/>
           <toolTipText value="Iniciar sesion con usuario"/>
@@ -420,19 +421,22 @@
       </vspacer>
       <component id="eaf37" class="javax.swing.JTextField" binding="UsuarioInfo">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
         <properties>
-          <background color="-13882315"/>
+          <background color="-16777216"/>
           <caretColor color="-592129"/>
+          <caretPosition value="5"/>
           <disabledTextColor color="-3838465"/>
           <editable value="false"/>
+          <font name="Consolas"/>
           <foreground color="-592129"/>
           <horizontalAlignment value="0"/>
+          <opaque value="true"/>
           <selectedTextColor color="-3838465"/>
-          <selectionColor color="-7874742"/>
+          <selectionColor color="-16777216"/>
           <text value="User: NonUser"/>
         </properties>
       </component>

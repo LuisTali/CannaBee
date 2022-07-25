@@ -78,7 +78,23 @@ public class Connect {
         return usuario;
     }
 
-    public void registrarCepas(){}//Escribir codigo para registrar Cepas.
+    public void registrarCepas(Cepa c) {
+        Connection con;
+        String sql = "INSERT INTO geneticas(nombre,thc,rasa,bancoGen,comments) VALUES (?,?,?,?,?)";
+        PreparedStatement ps;
+        try{
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1,c.getNombre());
+            ps.setDouble(2,c.getThc());
+            ps.setString(3,c.getRaza());
+            ps.setString(4,c.getBanco());
+            ps.setString(5,c.getComentarios());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//Escribir codigo para registrar Cepas.
 
     public HashMapGen<Integer, Cepa> consultarCepasBancos() {
         HashMapGen<Integer, Cepa> auxCepas = null;

@@ -51,6 +51,16 @@ public class HashMapGen <K,V> implements Serializable {
 
     public K getKey(){return key;}
 
+    public String getKeys(){
+        K auxK = null;
+        StringBuilder buffer = new StringBuilder();
+        for (Map.Entry<K,V> obj : hashMap.entrySet()){
+            buffer.append(obj.getKey().toString());
+            buffer.append("");
+        }
+        return buffer.toString();
+    }
+
     public String mostrar(){
         StringBuilder buffer = new StringBuilder();
         for (Map.Entry<K,V> obj : hashMap.entrySet()) {
