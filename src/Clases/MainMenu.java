@@ -1,6 +1,5 @@
 package Clases;
 
-import Forms.RegisterGenBank;
 import UserRelated.User;
 
 import javax.swing.*;
@@ -36,20 +35,23 @@ public class MainMenu extends JFrame {
     private JTextArea commentsEditArea;
     private JButton xButton;
     private JButton COMPRARButton;
-    private JTextField textField1;
+    private JTextField cantidadField;
     private JTable gensBankTable;
     private JButton cargarBancoDeGeneticasButton;
     private JLabel cantComprarLabel;
     private JButton button1;
     private JButton EDITARButton;
     private JButton CONFIRMARButton;
+    private JTextField stockField;
     private User usuario = new User();
     CannaBeeSystem cbSyst = new CannaBeeSystem();
+    Connect con = new Connect();
 
     public MainMenu() {
         super("MainMenu.exe");
-        modelarListas();
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
+        cbSyst.cepasBanksReadSQL();
+        llenarListas(); //Les da el formato a las listas y tambien las llena.
         setContentPane(MainMenuPane);
         setMinimumSize(new Dimension(650, 650));
         setLocationRelativeTo(null); //Centra en el medio
@@ -158,6 +160,27 @@ public class MainMenu extends JFrame {
                 agregarGenBancoButtonLogic();
             }
         });
+
+        gensBankTable.addMouseListener(new MouseAdapter() { //Listener para que al seleccionar una Gen tire su Stock.
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int filaSelected = gensBankTable.getSelectedRow();
+                if (filaSelected > -1) {
+                    String auxNombre = (String) gensBankTable.getValueAt(filaSelected, 0);
+                    stockField.setText(String.valueOf(con.consultarStockGen(auxNombre)));
+                }
+            }
+        });
+
+        COMPRARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (usuario.getId() > 0)
+                comprarButtonLogic();
+                else JOptionPane.showMessageDialog(null,"Funcion para usuarios logueados");
+            }
+        });
     }
 
     public boolean checkUserGens() {
@@ -178,9 +201,28 @@ public class MainMenu extends JFrame {
     }
 
     public void agregarGenBancoButtonLogic() {
-        RegisterGenBank rBank = new RegisterGenBank(null);
+        RegisterGenBank rBank = new RegisterGenBank(this); //Problema sucede al enviar como parametro 'this'.
         rBank.setVisible(true);
+    }
 
+    public void comprarButtonLogic() {
+        int filaSelected = gensBankTable.getSelectedRow();
+        if (filaSelected > -1) {
+            String auxNombre = (String) gensBankTable.getValueAt(filaSelected,0);
+            if (!cantidadField.getText().isEmpty()) {
+                int stockActual = Integer.parseInt(stockField.getText());
+                int auxStock = Integer.parseInt(cantidadField.getText());
+                if (0 < auxStock && auxStock <= stockActual) {
+                    con.actualizarStock(auxNombre,auxStock); //Actualiza el stock de la gen en MySQL.
+                    cbSyst.cepasBanksReadSQL(); //Carga el hashmap de gensBanco desde MySQL.
+                    stockField.setText(String.valueOf(cbSyst.getStockGen(auxNombre))); //Busca en CannaBeeSystem el stock de esa gen.
+                    stockField.setText(String.valueOf(con.consultarStockGen(auxNombre))); //Actualiza el campo Stock.
+                    listarGensBancos(); //Lista banco de geneticas.
+                } else
+                    JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida para comprar entre 0 < x <= " + stockField.getText());
+            } else
+                JOptionPane.showMessageDialog(null, "Especifique cantidad a comprar");
+        } else JOptionPane.showMessageDialog(null, "Elija una genetica de la tabla primero");
     }
 
     public void listarGensUser() { //Lista las geneticas del usuario en la Lista.
@@ -189,17 +231,20 @@ public class MainMenu extends JFrame {
                 return false;
             }
         };
-        Iterator entries = cbSyst.getCepasUserIterator(usuario.getId());
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            String key = (String) entry.getKey();
-            Cepa value = (Cepa) entry.getValue();
-            model.addRow(new Object[]{key, value.getRaza(), value.getThc(), value.getComentarios()});
-        }
+        if (!(usuario.getId() <= 0)) { //Linea para comprobar si hay usuario iniciado agregada.
+            Iterator entries = cbSyst.getCepasUserIterator(usuario.getId());
+            while (entries.hasNext()) {
+                Map.Entry entry = (Map.Entry) entries.next();
+                String key = (String) entry.getKey();
+                Cepa value = (Cepa) entry.getValue();
+                model.addRow(new Object[]{key, value.getRaza(), value.getThc(), value.getComentarios()});
+            }
+        } else System.out.println("Usuario no ingresado.");
+
         gensTable.setModel(model);
     }
 
-    public void listarGensBancos() { //Comprobar correcto funcionamiento.
+    public void listarGensBancos() {
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios", "Banco"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -209,40 +254,17 @@ public class MainMenu extends JFrame {
         Iterator entries = cbSyst.getCepasBancosIterator();
         while (entries.hasNext()) {
             Map.Entry entry = (Map.Entry) entries.next();
-            String key = (String) entry.getKey();
-            Iterator entriesCepas = cbSyst.getCepasPorBancoIterator(key);
-            while (entriesCepas.hasNext()) {
-                Map.Entry entryCepa = (Map.Entry) entriesCepas.next();
-                String keyC = (String) entryCepa.getKey();
-                Cepa valueC = (Cepa) entryCepa.getValue();
-                model.addRow(new Object[]{key,valueC.getRaza(),valueC.getThc(),valueC.getComentarios(),valueC.getBanco()});
-            }
+            Integer key = (Integer) entry.getKey();
+            Cepa valueC = (Cepa) entry.getValue();
+            if (valueC.getStock() > 0)
+            model.addRow(new Object[]{valueC.getNombre(), valueC.getRaza(), valueC.getThc(), valueC.getComentarios(), valueC.getBanco()});
         }
         gensBankTable.setModel(model);
     }
 
-    public void modelarListas() {
-        modelarListaGensUser();
-        modelarListaGensBancos();
-    }
-
-    public void modelarListaGensUser() {
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios"}, 0) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        gensTable.setModel(model);
-    }
-
-    public void modelarListaGensBancos() {
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios", "Banco"}, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        gensBankTable.setModel(model);
+    public void llenarListas() {
+        listarGensUser();
+        listarGensBancos();
     }
 
     public void setText(String t) {

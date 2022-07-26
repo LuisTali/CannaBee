@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CannaBeeSystem {
     HashMapGen<Integer, HashMapGen<String, Cepa>> cepasUser = new HashMapGen<>();
-    HashMapGen<String, HashMapGen<String, Cepa>> cepasBancos = new HashMapGen<>();
+    HashMapGen<Integer, Cepa> cepasBancos = new HashMapGen<>();
     Connect con = new Connect();
 
     public void agregarCepaUser(Integer id, Cepa c) {
@@ -23,21 +23,13 @@ public class CannaBeeSystem {
         }
     }
 
-    public void agregarCepaBanco(String key, Cepa c) {
-        if (cepasBancos.containsKey(key)) {
-            cepasBancos.elementByKey(key).añadir(c.getNombre(), c);
-            System.out.println("Banco ya creado: " + key);
-        } else {
-            HashMapGen<String, Cepa> registroCepas = new HashMapGen<>();
-            registroCepas.añadir(c.getNombre(), c);
-            System.out.println("Banco Creado: " + key);
-            cepasBancos.añadir(key, registroCepas);
-        }
+    public void agregarCepaBanco(Integer key, Cepa c) {
+        cepasBancos.añadir(key, c);
     }
 
-    public void eliminarCepa(int id, String nombre){
-        if (cepasUser.containsKey(id)){
-             cepasUser.elementByKey(id).eliminar(nombre);
+    public void eliminarCepa(int id, String nombre) {
+        if (cepasUser.containsKey(id)) {
+            cepasUser.elementByKey(id).eliminar(nombre);
         }
     }
 
@@ -70,9 +62,21 @@ public class CannaBeeSystem {
         return cepasUser.elementByKey(id).getIterator();
     }
 
-    public Iterator getCepasBancosIterator(){return cepasBancos.getIterator();}
+    public Iterator getCepasBancosIterator() {
+        return cepasBancos.getIterator();
+    }
 
-    public Iterator getCepasPorBancoIterator(String key){return cepasBancos.elementByKey(key).getIterator();}
+    public Integer getStockGen(String nombre){
+        Integer auxStock = null;
+        Iterator entries = getCepasBancosIterator();
+        while (entries.hasNext()){
+            Map.Entry entry = (Map.Entry) entries.next();
+            Integer key = (Integer) entry.getKey();
+            Cepa c = (Cepa) entry.getValue();
+            if (c.getNombre().equals(nombre)) auxStock=c.getStock();
+        }
+        return auxStock;
+    }
 
     public void cepasToFile() {
         if (cepasUser.hSize() > 0) {
@@ -113,6 +117,10 @@ public class CannaBeeSystem {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void cepasBanksReadSQL() {
+        cepasBancos = con.consultarCepasBancos();
     }
 
     public void createFolder(File file) {

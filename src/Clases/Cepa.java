@@ -3,12 +3,13 @@ package Clases;
 import java.io.Serializable;
 
 public class Cepa implements Serializable {
-    private int id;
+    private Integer id;
     private String nombre;
     private String raza;
     private double thc;
     private String comentarios;
     private String banco;
+    private Integer stock;
 
     public Cepa() {
     }
@@ -26,12 +27,13 @@ public class Cepa implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public Cepa(String nombre, String raza, double thc, String comentarios, String banco) {
+    public Cepa(String nombre, String raza, double thc, String comentarios, String banco, int stock) {
         this.nombre = nombre;
         this.raza = raza;
         this.thc = thc;
         this.comentarios = comentarios;
         this.banco = banco;
+        this.stock = stock;
     }
 
     public int getId() {
@@ -58,6 +60,10 @@ public class Cepa implements Serializable {
         return banco;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -80,6 +86,10 @@ public class Cepa implements Serializable {
 
     public void setBanco(String banco) {
         this.banco = banco;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String toString() {

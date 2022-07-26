@@ -80,16 +80,17 @@ public class Connect {
 
     public void registrarCepas(Cepa c) {
         Connection con;
-        String sql = "INSERT INTO geneticas(nombre,thc,rasa,bancoGen,comments) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO geneticas (nombre,thc,rasa,bancoGen,comments,stock) VALUES (?,?,?,?,?,?)";
         PreparedStatement ps;
-        try{
+        try {
             con = getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1,c.getNombre());
-            ps.setDouble(2,c.getThc());
-            ps.setString(3,c.getRaza());
-            ps.setString(4,c.getBanco());
-            ps.setString(5,c.getComentarios());
+            ps.setString(1, c.getNombre());
+            ps.setDouble(2, c.getThc());
+            ps.setString(3, c.getRaza());
+            ps.setString(4, c.getBanco());
+            ps.setString(5, c.getComentarios());
+            ps.setInt(6, c.getStock());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,6 +117,7 @@ public class Connect {
                 auxCepa.setRaza(rs.getString(4));
                 auxCepa.setBanco(rs.getString(5));
                 auxCepa.setComentarios(rs.getString(6));
+                auxCepa.setStock(rs.getInt(7));
                 auxCepas.añadir(auxCepa.getId(), auxCepa);
             }
             rs.close();
@@ -123,6 +125,62 @@ public class Connect {
             e.printStackTrace();
         }
         return auxCepas;
+    }
+
+    public Integer consultarIdGen(String nombre) {
+        Cepa auxC = null;
+        Integer auxId = null;
+        Connection con;
+        PreparedStatement ps;
+        String sql = "SELECT * FROM geneticas WHERE nombre=?";
+        ResultSet rs;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                auxId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return auxId;
+    }
+
+    public Integer consultarStockGen(String nombre) {
+        Integer auxStock = null;
+        Connection con;
+        PreparedStatement ps;
+        String sql = "SELECT * FROM geneticas WHERE nombre=?";
+        ResultSet rs;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                auxStock = rs.getInt(7);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return auxStock;
+    }
+
+    public void actualizarStock(String nombre, Integer auxStock){ //Al momento de comprar, recibir el stock deseado y actualizarlo en MySQL.
+        Connection con;
+        String sql = "UPDATE geneticas SET stock=? WHERE nombre=?" ;
+        PreparedStatement ps;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,consultarStockGen(nombre)-auxStock);
+            ps.setString(2,nombre);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String returnIDKeys() {
