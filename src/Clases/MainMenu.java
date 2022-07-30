@@ -43,6 +43,7 @@ public class MainMenu extends JFrame {
     private JButton EDITARButton;
     private JButton CONFIRMARButton;
     private JTextField stockField;
+    private JComboBox bancoBox;
     private User usuario = new User();
     CannaBeeSystem cbSyst = new CannaBeeSystem();
     Connect con = new Connect();
@@ -181,6 +182,13 @@ public class MainMenu extends JFrame {
                 else JOptionPane.showMessageDialog(null,"Funcion para usuarios logueados");
             }
         });
+
+        bancoBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public boolean checkUserGens() {
@@ -260,6 +268,10 @@ public class MainMenu extends JFrame {
             model.addRow(new Object[]{valueC.getNombre(), valueC.getRaza(), valueC.getThc(), valueC.getComentarios(), valueC.getBanco()});
         }
         gensBankTable.setModel(model);
+    }
+
+    public void listarBancoBox(){
+
     }
 
     public void llenarListas() {

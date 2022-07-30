@@ -3,6 +3,7 @@ package Clases;
 import UserRelated.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Connect {
     private static Connection con;
@@ -168,19 +169,46 @@ public class Connect {
         return auxStock;
     }
 
-    public void actualizarStock(String nombre, Integer auxStock){ //Al momento de comprar, recibir el stock deseado y actualizarlo en MySQL.
+    public void actualizarStock(String nombre, Integer auxStock) { //Al momento de comprar, recibir el stock deseado y actualizarlo en MySQL.
         Connection con;
-        String sql = "UPDATE geneticas SET stock=? WHERE nombre=?" ;
+        String sql = "UPDATE geneticas SET stock=? WHERE nombre=?";
         PreparedStatement ps;
         try {
             con = getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1,consultarStockGen(nombre)-auxStock);
-            ps.setString(2,nombre);
+            ps.setInt(1, consultarStockGen(nombre) - auxStock);
+            ps.setString(2, nombre);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<String> returnBanksName() { //Consulta a MySQL los nombres de los bancos, mete uno solo de cada uno y lo retorna en un ArrayList.
+        ArrayList<String> nombres = null;
+        boolean flag = true;
+        Connection con;
+        PreparedStatement ps;
+        String sql = "SELECT * FROM geneticas";
+        ResultSet rs;
+        try {
+            nombres = new ArrayList<>();
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String auxB = rs.getString(5);
+                while (flag) {
+                    for (String nombre : nombres) {
+                        if (auxB.equals(nombre)) flag = false;
+                    }
+                    if (flag) nombres.add(auxB);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombres;
     }
 
     public String returnIDKeys() {
