@@ -50,7 +50,7 @@ public class RegisterGenBank extends JDialog {
 
     public void registerGenButtonLogic(){
         if (!nombreField.getText().isEmpty() & !thcField.getText().isEmpty() & !rasafield.getText().isEmpty() & !creadorField.getText().isEmpty() & !comentariosField.getText().isEmpty()){
-            Cepa aux = new Cepa(nombreField.getText(),rasafield.getText(),Double.parseDouble(thcField.getText()),comentariosField.getText(),creadorField.getText(),Integer.parseInt(stockField.getText()));
+            Cepa aux = new Cepa(nombreField.getText(), Double.parseDouble(thcField.getText()), rasafield.getText(),comentariosField.getText(),creadorField.getText(),Integer.parseInt(stockField.getText()));
             con.registrarCepas(aux);
             Integer auxId = con.consultarIdGen(aux.getNombre());
             System.out.println("\nID Auxiliar: " + auxId);

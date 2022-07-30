@@ -27,7 +27,7 @@ public class Cepa implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public Cepa(String nombre, String raza, double thc, String comentarios, String banco, int stock) {
+    public Cepa(String nombre, double thc,String raza, String comentarios, String banco, int stock) {
         this.nombre = nombre;
         this.raza = raza;
         this.thc = thc;

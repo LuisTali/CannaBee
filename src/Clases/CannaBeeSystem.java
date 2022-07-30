@@ -1,7 +1,10 @@
 package Clases;
 
+import UserRelated.IndoorConfig;
+
 import java.io.*;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -9,6 +12,7 @@ import java.util.Map;
 public class CannaBeeSystem {
     HashMapGen<Integer, HashMapGen<String, Cepa>> cepasUser = new HashMapGen<>();
     HashMapGen<Integer, Cepa> cepasBancos = new HashMapGen<>();
+    ArrayList<IndoorConfig> configsIndoor = new ArrayList<>();
     Connect con = new Connect();
 
     public void agregarCepaUser(Integer id, Cepa c) {
@@ -66,6 +70,10 @@ public class CannaBeeSystem {
         return cepasBancos.getIterator();
     }
 
+    public Iterator getBancosIterator(){
+        return con.returnBanksName().iterator();
+    }
+
     public Integer getStockGen(String nombre){
         Integer auxStock = null;
         Iterator entries = getCepasBancosIterator();
@@ -117,6 +125,15 @@ public class CannaBeeSystem {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void añadirIndoorConfig(int idUser,String luz, String cooler,String indoor,String ventilador, String maceta){
+        IndoorConfig iC = new IndoorConfig(idUser,luz,cooler,indoor,ventilador,maceta);
+        configsIndoor.add(iC);
+    }
+
+    public Iterator getCepasPorBancoIterator(String nombre){
+        return con.retornarGensPorBanco(nombre).getIterator();
     }
 
     public void cepasBanksReadSQL() {

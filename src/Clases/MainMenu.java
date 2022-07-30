@@ -44,6 +44,18 @@ public class MainMenu extends JFrame {
     private JButton CONFIRMARButton;
     private JTextField stockField;
     private JComboBox bancoBox;
+    private JPanel miIndoorPane;
+    private JLabel lucesLabel;
+    private JLabel ventiladoresLabel;
+    private JLabel indoorLabel;
+    private JLabel macetasLabel;
+    private JLabel coolerLaber;
+    private JLabel lucesInfoLabel;
+    private JLabel ventiladoresInfoLabel;
+    private JLabel indoorInfoLabel;
+    private JLabel macetasInfoLabel;
+    private JLabel coolersInfoLabel;
+    private JButton saveConfigButton;
     private User usuario = new User();
     CannaBeeSystem cbSyst = new CannaBeeSystem();
     Connect con = new Connect();
@@ -52,6 +64,7 @@ public class MainMenu extends JFrame {
         super("MainMenu.exe");
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
         cbSyst.cepasBanksReadSQL();
+        listarBancoBox();
         llenarListas(); //Les da el formato a las listas y tambien las llena.
         setContentPane(MainMenuPane);
         setMinimumSize(new Dimension(650, 650));
@@ -83,37 +96,6 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cbSyst.cepasToFile();
                 dispose();
-            }
-        });
-
-        logInButton.addMouseListener(new MouseAdapter() { //Al pasar mouse por encima del boton logIn hace esto.
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                super.mouseEntered(e);
-                logInButton.setBackground(new Color(246, 246, 255));
-                logInButton.setForeground(new Color(0, 0, 0));
-            }
-        });
-
-        logInButton.addMouseListener(new MouseAdapter() { //Al quitar el mouse de encima del boton logIn hace esto.
-            @Override
-            public void mouseExited(MouseEvent e) {
-                super.mouseExited(e);
-                logInButton.setBackground(new Color(0, 0, 0));
-                logInButton.setForeground(new Color(246, 246, 255));
-            }
-        });
-
-        TabbedMenu.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                if (usuario.getId() <= 0) {
-                    TabbedMenu.remove(geneticasPane);
-                }
-                if (!usuario.isAdmin()) {
-                    bancosPane.remove(cargarBancoDeGeneticasButton);
-                }
             }
         });
 
@@ -178,15 +160,93 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (usuario.getId() > 0)
-                comprarButtonLogic();
-                else JOptionPane.showMessageDialog(null,"Funcion para usuarios logueados");
+                    comprarButtonLogic();
+                else JOptionPane.showMessageDialog(null, "Funcion para usuarios logueados");
             }
         });
 
         bancoBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(!bancoBox.getSelectedItem().equals(""));
+                System.out.println(bancoBox.getSelectedItem().equals(""));
+                if (!bancoBox.getSelectedItem().equals("")) {
+                    String auxB = (String) bancoBox.getSelectedItem();
+                    listarGensBancosPorBanco(auxB);
+                }
+            }
+        });
 
+        TabbedMenu.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                if (usuario.getId() <= 0) {
+                    TabbedMenu.remove(geneticasPane);
+                }
+                if (!usuario.isAdmin()) {
+                    bancosPane.remove(cargarBancoDeGeneticasButton);
+                }
+            }
+        });
+
+        logInButton.addMouseListener(new MouseAdapter() { //Al pasar mouse por encima del boton logIn hace esto.
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                logInButton.setBackground(new Color(246, 246, 255));
+                logInButton.setForeground(new Color(0, 0, 0));
+            }
+        });
+
+        logInButton.addMouseListener(new MouseAdapter() { //Al quitar el mouse de encima del boton logIn hace esto.
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                logInButton.setBackground(new Color(0, 0, 0));
+                logInButton.setForeground(new Color(246, 246, 255));
+            }
+        });
+
+        lucesLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese el nombre del Panel o Foco y su potencia en Watts.");
+                lucesInfoLabel.setText(aux);
+            }
+        });
+
+        ventiladoresLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese nombre de su ventilador y potencia.");
+                ventiladoresInfoLabel.setText(aux);
+            }
+        });
+        indoorLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese marca y medidas en CM de su carpa.");
+                indoorInfoLabel.setText(aux);
+            }
+        });
+        macetasLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese cantidad de macetas y sus litros.");
+                macetasInfoLabel.setText(aux);
+            }
+        });
+        coolerLaber.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrse cantidad y pulgadas de sus coolers.");
+                coolersInfoLabel.setText(aux);
             }
         });
     }
@@ -216,12 +276,12 @@ public class MainMenu extends JFrame {
     public void comprarButtonLogic() {
         int filaSelected = gensBankTable.getSelectedRow();
         if (filaSelected > -1) {
-            String auxNombre = (String) gensBankTable.getValueAt(filaSelected,0);
+            String auxNombre = (String) gensBankTable.getValueAt(filaSelected, 0);
             if (!cantidadField.getText().isEmpty()) {
                 int stockActual = Integer.parseInt(stockField.getText());
                 int auxStock = Integer.parseInt(cantidadField.getText());
                 if (0 < auxStock && auxStock <= stockActual) {
-                    con.actualizarStock(auxNombre,auxStock); //Actualiza el stock de la gen en MySQL.
+                    con.actualizarStock(auxNombre, auxStock); //Actualiza el stock de la gen en MySQL.
                     cbSyst.cepasBanksReadSQL(); //Carga el hashmap de gensBanco desde MySQL.
                     stockField.setText(String.valueOf(cbSyst.getStockGen(auxNombre))); //Busca en CannaBeeSystem el stock de esa gen.
                     stockField.setText(String.valueOf(con.consultarStockGen(auxNombre))); //Actualiza el campo Stock.
@@ -265,13 +325,36 @@ public class MainMenu extends JFrame {
             Integer key = (Integer) entry.getKey();
             Cepa valueC = (Cepa) entry.getValue();
             if (valueC.getStock() > 0)
-            model.addRow(new Object[]{valueC.getNombre(), valueC.getRaza(), valueC.getThc(), valueC.getComentarios(), valueC.getBanco()});
+                model.addRow(new Object[]{valueC.getNombre(), valueC.getRaza(), valueC.getThc(), valueC.getComentarios(), valueC.getBanco()});
         }
         gensBankTable.setModel(model);
     }
 
-    public void listarBancoBox(){
+    public void listarGensBancosPorBanco(String nombre) { //Lista la tabla en base al banco elegido.
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios", "Banco"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        Iterator entries = cbSyst.getCepasPorBancoIterator(nombre);
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            Integer key = (Integer) entry.getKey();
+            Cepa valueC = (Cepa) entry.getValue();
+            if (valueC.getStock() > 0)
+                model.addRow(new Object[]{valueC.getNombre(), valueC.getRaza(), valueC.getThc(), valueC.getComentarios(), valueC.getBanco()});
+        }
+        gensBankTable.setModel(model);
+    }
 
+    public void listarBancoBox() {
+        bancoBox.removeAllItems();
+        Iterator entries = cbSyst.getBancosIterator();
+        while (entries.hasNext()) {
+            String auxB = (String) entries.next();
+            bancoBox.addItem(auxB);
+        }
     }
 
     public void llenarListas() {

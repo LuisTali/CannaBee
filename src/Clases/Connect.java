@@ -45,6 +45,27 @@ public class Connect {
         }
     }
 
+    public String returnIDKeys() {
+        StringBuilder buffer = new StringBuilder();
+        Connection con;
+        String sql = "SELECT * FROM usuarios";
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                buffer.append(rs.getInt(1));
+                buffer.append(" ");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return buffer.toString();
+    }
+
     public User autentificar(String mail, char[] password) {
         Connection conn;
         //El =? es para dejar la variable como incognita y luego asignarle un valor.
@@ -143,6 +164,7 @@ public class Connect {
             while (rs.next()) {
                 auxId = rs.getInt(1);
             }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -163,6 +185,7 @@ public class Connect {
             while (rs.next()) {
                 auxStock = rs.getInt(7);
             }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -204,32 +227,35 @@ public class Connect {
                     }
                     if (flag) nombres.add(auxB);
                 }
+                flag = true;
             }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return nombres;
     }
 
-    public String returnIDKeys() {
-        StringBuilder buffer = new StringBuilder();
+    public HashMapGen<Integer,Cepa> retornarGensPorBanco(String nombre){
         Connection con;
-        String sql = "SELECT * FROM usuarios";
+        String sql = "SELECT * FROM geneticas WHERE bancoGen=?";
         PreparedStatement ps;
         ResultSet rs;
+        HashMapGen<Integer,Cepa> auxCepas= new HashMapGen<>();;
         try {
             con = getConnection();
             ps = con.prepareStatement(sql);
+            ps.setString(1,nombre);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                buffer.append(rs.getInt(1));
-                buffer.append(" ");
+            while (rs.next()){
+                Cepa auxC = new Cepa(rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
+                auxCepas.añadir(rs.getInt(1),auxC);
             }
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return buffer.toString();
+        return auxCepas;
     }
 
     public void desconnection() {
