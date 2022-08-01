@@ -1,5 +1,6 @@
 package Clases;
 
+import UserRelated.IndoorConfig;
 import UserRelated.User;
 
 import javax.swing.*;
@@ -39,9 +40,9 @@ public class MainMenu extends JFrame {
     private JTable gensBankTable;
     private JButton cargarBancoDeGeneticasButton;
     private JLabel cantComprarLabel;
-    private JButton button1;
-    private JButton EDITARButton;
-    private JButton CONFIRMARButton;
+    private JButton buscarButton;
+    private JButton editarButton;
+    private JButton confirmarButton;
     private JTextField stockField;
     private JComboBox bancoBox;
     private JPanel miIndoorPane;
@@ -56,6 +57,7 @@ public class MainMenu extends JFrame {
     private JLabel macetasInfoLabel;
     private JLabel coolersInfoLabel;
     private JButton saveConfigButton;
+    private JPanel indoorSetPanel;
     private User usuario = new User();
     CannaBeeSystem cbSyst = new CannaBeeSystem();
     Connect con = new Connect();
@@ -63,22 +65,23 @@ public class MainMenu extends JFrame {
     public MainMenu() {
         super("MainMenu.exe");
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
+        cbSyst.configsReadFile();
         cbSyst.cepasBanksReadSQL();
         listarBancoBox();
-        llenarListas(); //Les da el formato a las listas y tambien las llena.
+        llenarListas(); //Les da el formato a las listas y tambien las llena. Este metodo quedaria obsoleto al pedirle al LogIn que lo haga antes.
+        //setearConfigIndoor(); //Carga los labels con la info del indoor.
         setContentPane(MainMenuPane);
         setMinimumSize(new Dimension(650, 650));
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); //Indica que sucede al cliquear el boton X.
         commentsArea.setLineWrap(true); //Corta la palabra al escribir y llegar al final en el TextArea Comments.
-        // if (usuario.getId() > 0)
-        //    listarGensUser(); Al invocar el metodo desde el LogIn estas lineas quedan obsoletas.
 
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cbSyst.cepasToFile(); //Para que si cancela, se guarden las geneticas del Usuario actual.
+                cbSyst.configsToFile();
                 LogIn logIn = new LogIn(null);
                 dispose();
             }
@@ -88,6 +91,7 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 agregarGenButtonLogic();
+                clearFields(); //Limpia los textfields.
                 listarGensUser();
             }
         });
@@ -95,11 +99,12 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cbSyst.cepasToFile();
+                cbSyst.configsToFile();
                 dispose();
             }
         });
 
-        EDITARButton.addActionListener(new ActionListener() {
+        editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int filaSelect = gensTable.getSelectedRow();
@@ -114,7 +119,7 @@ public class MainMenu extends JFrame {
             }
         });
 
-        CONFIRMARButton.addActionListener(new ActionListener() {
+        confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int auxID = usuario.getId();
@@ -134,6 +139,7 @@ public class MainMenu extends JFrame {
                     cbSyst.agregarCepaUser(auxID, auxCepa);
                 }
                 listarGensUser();
+                clearFields();
             }
         });
 
@@ -181,9 +187,9 @@ public class MainMenu extends JFrame {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                if (usuario.getId() <= 0) {
-                    TabbedMenu.remove(geneticasPane);
-                }
+                // if (usuario.getId() <= 0) {
+                //JOptionPane.showMessageDialog(null,"Tabla de MisGeneticas solo para Usuarios logueados.");
+                // }
                 if (!usuario.isAdmin()) {
                     bancosPane.remove(cargarBancoDeGeneticasButton);
                 }
@@ -212,8 +218,13 @@ public class MainMenu extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese el nombre del Panel o Foco y su potencia en Watts.");
-                lucesInfoLabel.setText(aux);
+                System.out.println(usuario.getId());
+                if (usuario.getId() > 0) { //Si hay usuario logueado permite el ingreso de Data
+                    String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese el nombre del Panel o Foco y su potencia en Watts.");
+                    if (aux != null) //Si no se cancelo el InputDialog.
+                        lucesInfoLabel.setText(aux);
+                } else JOptionPane.showMessageDialog(null, "Ingrese con un Usuario valido.");
+
             }
         });
 
@@ -221,34 +232,70 @@ public class MainMenu extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese nombre de su ventilador y potencia.");
-                ventiladoresInfoLabel.setText(aux);
+                if (usuario.getId() > 0) {
+                    String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese nombre de su ventilador y potencia.");
+                    if (aux != null)
+                        ventiladoresInfoLabel.setText(aux);
+                } else JOptionPane.showMessageDialog(null, "Ingrese con un Usuario valido.");
             }
         });
         indoorLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese marca y medidas en CM de su carpa.");
-                indoorInfoLabel.setText(aux);
+                if (usuario.getId() > 0) {
+                    String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese marca y medidas en CM de su carpa.");
+                    if (aux != null)
+                        indoorInfoLabel.setText(aux);
+                } else JOptionPane.showMessageDialog(null, "Ingrese con un Usuario valido.");
             }
         });
         macetasLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese cantidad de macetas y sus litros.");
-                macetasInfoLabel.setText(aux);
+                if (usuario.getId() > 0) {
+                    String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrese cantidad de macetas y sus litros.");
+                    if (aux != null)
+                        macetasInfoLabel.setText(aux);
+                } else JOptionPane.showMessageDialog(null, "Ingrese con un Usuario valido.");
             }
         });
         coolerLaber.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrse cantidad y pulgadas de sus coolers.");
-                coolersInfoLabel.setText(aux);
+                if (usuario.getId() > 0) {
+                    String aux = JOptionPane.showInternalInputDialog(MainMenuPane, "Ingrse cantidad y pulgadas de sus coolers.");
+                    if (aux != null)
+                        coolersInfoLabel.setText(aux);
+                } else JOptionPane.showMessageDialog(null, "Ingrese con un Usuario valido.");
             }
         });
+        saveConfigButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (usuario.getId() > 0) {
+                    String luz = lucesInfoLabel.getText();
+                    String ventilador = ventiladoresInfoLabel.getText();
+                    String indoor = indoorInfoLabel.getText();
+                    String maceta = macetasInfoLabel.getText();
+                    String cooler = coolersInfoLabel.getText();
+                    cbSyst.agregarConfigIndoor(usuario.getId(), luz, ventilador, indoor, maceta, cooler);
+                } else JOptionPane.showMessageDialog(null, "Funcion solo para Usuarios logueados.");
+            }
+        });
+
+        geneticasPane.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                if (usuario.getId() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Tabla MisGeneticas solo para Usuarios logueados.");
+                }
+            }
+        });
+
     }
 
     public boolean checkUserGens() {
@@ -291,6 +338,18 @@ public class MainMenu extends JFrame {
             } else
                 JOptionPane.showMessageDialog(null, "Especifique cantidad a comprar");
         } else JOptionPane.showMessageDialog(null, "Elija una genetica de la tabla primero");
+    }
+
+    public void setearConfigIndoor() {
+        if (usuario.getId() > 0) {
+            IndoorConfig iC = cbSyst.getIndoorConfig(usuario.getId());
+            System.out.println(iC.toString());
+            lucesInfoLabel.setText(iC.getLuz());
+            ventiladoresInfoLabel.setText(iC.getVentilador());
+            indoorInfoLabel.setText(iC.getIndoor());
+            macetasInfoLabel.setText(iC.getMaceta());
+            coolersInfoLabel.setText(iC.getCooler());
+        }
     }
 
     public void listarGensUser() { //Lista las geneticas del usuario en la Lista.
@@ -372,6 +431,17 @@ public class MainMenu extends JFrame {
 
     public void setUser(User user) {
         usuario = user;
+    }
+
+    public void clearFields() {
+        nombreField.setText("");
+        razaField.setText("");
+        thcField.setText("");
+        commentsArea.setText("");
+        nombreEditField.setText("");
+        razaEditField.setText("");
+        thcEditField.setText("");
+        commentsEditArea.setText("");
     }
 
     public CannaBeeSystem getCbSyst() {

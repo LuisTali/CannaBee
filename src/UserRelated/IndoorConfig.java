@@ -1,6 +1,8 @@
 package UserRelated;
 
-public class IndoorConfig {
+import java.io.Serializable;
+
+public class IndoorConfig implements Serializable {
     private int id;
     private String luz;
     private String cooler;
@@ -63,5 +65,17 @@ public class IndoorConfig {
 
     public String getMaceta() {
         return maceta;
+    }
+
+    @Override
+    public String toString() {
+        return "IndoorConfig{" +
+                "id=" + id +
+                ", luz='" + luz + '\'' +
+                ", cooler='" + cooler + '\'' +
+                ", indoor='" + indoor + '\'' +
+                ", ventilador='" + ventilador + '\'' +
+                ", maceta='" + maceta + '\'' +
+                '}';
     }
 }

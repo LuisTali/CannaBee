@@ -66,11 +66,13 @@ public class LogIn extends JDialog {
     }
 
     public void mainMenuCreationLogic(MainMenu mm) {
+        dispose();
         mm.setUser(user);
         mm.setText(user.toTextField());
         mm.setVisible(true);
+        mm.setearConfigIndoor(); //Al setear y cargar listas de aca si llega a tomar al usuario.
         mm.listarGensUser();
-        dispose();
+        //dispose();
     }
 
     public void showRegister() {
