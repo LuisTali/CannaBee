@@ -62,14 +62,15 @@ public class MainMenu extends JFrame {
     CannaBeeSystem cbSyst = new CannaBeeSystem();
     Connect con = new Connect();
 
-    public MainMenu() {
+    public MainMenu(User user) {
         super("MainMenu.exe");
+        usuario = user;
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
         cbSyst.configsReadFile();
         cbSyst.cepasBanksReadSQL();
         listarBancoBox();
         llenarListas(); //Les da el formato a las listas y tambien las llena. Este metodo quedaria obsoleto al pedirle al LogIn que lo haga antes.
-        //setearConfigIndoor(); //Carga los labels con la info del indoor.
+        setearConfigIndoor(); //Carga los labels con la info del indoor.
         setContentPane(MainMenuPane);
         setMinimumSize(new Dimension(650, 650));
         setLocationRelativeTo(null); //Centra en el medio
@@ -190,7 +191,7 @@ public class MainMenu extends JFrame {
                 // if (usuario.getId() <= 0) {
                 //JOptionPane.showMessageDialog(null,"Tabla de MisGeneticas solo para Usuarios logueados.");
                 // }
-                if (!usuario.isAdmin()) {
+                if (usuario == null || !usuario.isAdmin()) {
                     bancosPane.remove(cargarBancoDeGeneticasButton);
                 }
             }
@@ -341,14 +342,16 @@ public class MainMenu extends JFrame {
     }
 
     public void setearConfigIndoor() {
-        if (usuario.getId() > 0) {
+        if (usuario != null && usuario.getId() > 0) {
             IndoorConfig iC = cbSyst.getIndoorConfig(usuario.getId());
-            System.out.println(iC.toString());
-            lucesInfoLabel.setText(iC.getLuz());
-            ventiladoresInfoLabel.setText(iC.getVentilador());
-            indoorInfoLabel.setText(iC.getIndoor());
-            macetasInfoLabel.setText(iC.getMaceta());
-            coolersInfoLabel.setText(iC.getCooler());
+            if (iC != null) {
+                System.out.println(iC.toString());
+                lucesInfoLabel.setText(iC.getLuz());
+                ventiladoresInfoLabel.setText(iC.getVentilador());
+                indoorInfoLabel.setText(iC.getIndoor());
+                macetasInfoLabel.setText(iC.getMaceta());
+                coolersInfoLabel.setText(iC.getCooler());
+            }
         }
     }
 
@@ -358,7 +361,7 @@ public class MainMenu extends JFrame {
                 return false;
             }
         };
-        if (!(usuario.getId() <= 0)) { //Linea para comprobar si hay usuario iniciado agregada.
+        if (usuario != null && !(usuario.getId() <= 0)) { //Linea para comprobar si hay usuario iniciado agregada.
             Iterator entries = cbSyst.getCepasUserIterator(usuario.getId());
             while (entries.hasNext()) {
                 Map.Entry entry = (Map.Entry) entries.next();

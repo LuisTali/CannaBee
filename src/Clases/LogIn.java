@@ -39,7 +39,7 @@ public class LogIn extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 user = con.autentificar(emailField.getText(), passwordField.getPassword());
                 if (user != null) {
-                    MainMenu mm = new MainMenu();
+                    MainMenu mm = new MainMenu(user);
                     JOptionPane.showMessageDialog(null, "Inicio de Sesion Satisfactorio");
                     mainMenuCreationLogic(mm);
                 } else JOptionPane.showMessageDialog(null, "Error en Inicio de Sesion");
@@ -48,7 +48,7 @@ public class LogIn extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainMenu mm = new MainMenu();
+                MainMenu mm = new MainMenu(user);
                 if (user != null) {
                     mainMenuCreationLogic(mm);
                 }
@@ -67,11 +67,11 @@ public class LogIn extends JDialog {
 
     public void mainMenuCreationLogic(MainMenu mm) {
         dispose();
-        mm.setUser(user);
+        //mm.setUser(user);
         mm.setText(user.toTextField());
         mm.setVisible(true);
-        mm.setearConfigIndoor(); //Al setear y cargar listas de aca si llega a tomar al usuario.
-        mm.listarGensUser();
+        /*mm.listarGensUser();
+        mm.setearConfigIndoor(); Lineas comentadas ya que se envia el Usuario por parametro al MainMenu. */
         //dispose();
     }
 
