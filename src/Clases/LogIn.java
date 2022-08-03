@@ -14,6 +14,7 @@ public class LogIn extends JDialog {
     private JButton registerButton;
     private JButton cancelButton;
     private JPasswordField passwordField;
+    private JPanel logInPane;
 
     public static User user = null;
 
@@ -22,10 +23,10 @@ public class LogIn extends JDialog {
     public LogIn(JFrame parent) {
         super(parent);
         setTitle("Log In");
-        setContentPane(LogInPanel);
+        setContentPane(logInPane);
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
-        setMinimumSize(new Dimension(600, 500));
+        setMinimumSize(new Dimension(450, 300));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         registerButton.addActionListener(new ActionListener() {
@@ -51,6 +52,9 @@ public class LogIn extends JDialog {
                 MainMenu mm = new MainMenu(user);
                 if (user != null) {
                     mainMenuCreationLogic(mm);
+                }else{
+                    dispose();
+                    mm.setVisible(true);
                 }
             }
         });
