@@ -33,7 +33,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <grid id="36820" layout-manager="GridLayoutManager" row-count="4" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="36820" layout-manager="GridLayoutManager" row-count="6" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -44,46 +44,34 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="40f85" class="javax.swing.JLabel" binding="comentsLabel">
+                  <vspacer id="1571a">
                     <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="5" row-span="4" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties>
-                      <foreground color="-592129"/>
-                      <text value="Comentarios"/>
-                    </properties>
-                  </component>
-                  <component id="4044a" class="javax.swing.JTextArea" binding="commentsArea">
+                  </vspacer>
+                  <vspacer id="75f17">
                     <constraints>
-                      <grid row="3" column="2" row-span="1" col-span="4" vsize-policy="6" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="50"/>
-                      </grid>
+                      <grid row="1" column="0" row-span="4" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
-                  </component>
-                  <hspacer id="4b9ef">
+                  </vspacer>
+                  <hspacer id="d30a1">
                     <constraints>
-                      <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </hspacer>
-                  <hspacer id="b74a9">
+                  <hspacer id="44e35">
                     <constraints>
-                      <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="5" column="0" row-span="1" col-span="6" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </hspacer>
-                  <component id="50700" class="javax.swing.JLabel" binding="nombreLabel">
+                  <hspacer id="89119">
                     <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties>
-                      <background color="-592129"/>
-                      <foreground color="-592129"/>
-                      <text value="Nombre *"/>
-                    </properties>
-                  </component>
+                  </hspacer>
                   <component id="a4f1e" class="javax.swing.JLabel" binding="thcLabel">
                     <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-592129"/>
@@ -91,14 +79,19 @@
                       <text value="THC *"/>
                     </properties>
                   </component>
-                  <hspacer id="2b85e">
+                  <component id="50700" class="javax.swing.JLabel" binding="nombreLabel">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
-                  </hspacer>
+                    <properties>
+                      <background color="-592129"/>
+                      <foreground color="-592129"/>
+                      <text value="Nombre *"/>
+                    </properties>
+                  </component>
                   <component id="61e44" class="javax.swing.JTextField" binding="nombreField">
                     <constraints>
-                      <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
@@ -106,7 +99,7 @@
                   </component>
                   <component id="8e5b3" class="javax.swing.JTextField" binding="thcField">
                     <constraints>
-                      <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
@@ -114,15 +107,32 @@
                   </component>
                   <component id="84b45" class="javax.swing.JTextField" binding="razaField">
                     <constraints>
-                      <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                     <properties/>
                   </component>
+                  <component id="4044a" class="javax.swing.JTextArea" binding="commentsArea">
+                    <constraints>
+                      <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="40f85" class="javax.swing.JLabel" binding="comentsLabel">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-592129"/>
+                      <text value="Comentarios"/>
+                    </properties>
+                  </component>
                   <component id="75e98" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-592129"/>
@@ -130,6 +140,11 @@
                       <text value="Raza *"/>
                     </properties>
                   </component>
+                  <hspacer id="ea737">
+                    <constraints>
+                      <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
                 </children>
               </grid>
               <component id="dfb5a" class="javax.swing.JButton" binding="agregarGen">
@@ -269,7 +284,7 @@
               </component>
             </children>
           </grid>
-          <grid id="a8e2e" binding="geneticasPane" layout-manager="GridLayoutManager" row-count="10" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="a8e2e" binding="geneticasPane" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Mis Geneticas"/>
@@ -283,7 +298,7 @@
             <children>
               <scrollpane id="39348" binding="GensScrollPane">
                 <constraints>
-                  <grid row="1" column="1" row-span="8" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="7" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-16777216"/>
@@ -311,12 +326,98 @@
               </scrollpane>
               <vspacer id="7bbd8">
                 <constraints>
-                  <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                  <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
                     <preferred-size width="5" height="5"/>
                     <maximum-size width="10" height="10"/>
                   </grid>
                 </constraints>
               </vspacer>
+              <vspacer id="d3c01">
+                <constraints>
+                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="152ef" class="javax.swing.JTextArea" binding="commentsEditArea">
+                <constraints>
+                  <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                    <maximum-size width="500" height="500"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <caretColor color="-592129"/>
+                  <lineWrap value="false"/>
+                  <text value=" &quot;comments&quot;"/>
+                </properties>
+              </component>
+              <component id="40041" class="javax.swing.JTextField" binding="thcEditField">
+                <constraints>
+                  <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <caretColor color="-592129"/>
+                  <text value="&quot;thc&quot;"/>
+                </properties>
+              </component>
+              <component id="df095" class="javax.swing.JTextField" binding="razaEditField">
+                <constraints>
+                  <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <caretColor color="-592129"/>
+                  <text value="&quot;raza&quot;"/>
+                </properties>
+              </component>
+              <component id="78913" class="javax.swing.JTextField" binding="nombreEditField">
+                <constraints>
+                  <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <caretColor color="-592129"/>
+                  <text value="&quot;nombre&quot;"/>
+                </properties>
+              </component>
+              <component id="3328f" class="javax.swing.JButton" binding="confirmarButton">
+                <constraints>
+                  <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-16777216"/>
+                  <foreground color="-3838465"/>
+                  <text value="CONFIRMAR"/>
+                </properties>
+              </component>
+              <component id="cecb8" class="javax.swing.JButton" binding="editarButton">
+                <constraints>
+                  <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-16777216"/>
+                  <foreground color="-3838465"/>
+                  <text value="EDITAR"/>
+                </properties>
+              </component>
+              <vspacer id="ee158">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <hspacer id="ddba">
+                <constraints>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <hspacer id="2647f">
+                <constraints>
+                  <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
               <component id="9b522" class="javax.swing.JTextField" binding="buscarField">
                 <constraints>
                   <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -336,108 +437,12 @@
                   <text value="Buscar/Nombre"/>
                 </properties>
               </component>
-              <component id="5dba3" class="javax.swing.JButton" binding="buscarButton">
-                <constraints>
-                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-16777216"/>
-                  <foreground color="-3838465"/>
-                  <text value="Button"/>
-                </properties>
-              </component>
-              <vspacer id="d3c01">
-                <constraints>
-                  <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <component id="152ef" class="javax.swing.JTextArea" binding="commentsEditArea">
-                <constraints>
-                  <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                    <maximum-size width="500" height="500"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <caretColor color="-592129"/>
-                  <lineWrap value="false"/>
-                  <text value=" &quot;comments&quot;"/>
-                </properties>
-              </component>
-              <component id="40041" class="javax.swing.JTextField" binding="thcEditField">
-                <constraints>
-                  <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <caretColor color="-592129"/>
-                  <text value="&quot;thc&quot;"/>
-                </properties>
-              </component>
-              <component id="df095" class="javax.swing.JTextField" binding="razaEditField">
-                <constraints>
-                  <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <caretColor color="-592129"/>
-                  <text value="&quot;raza&quot;"/>
-                </properties>
-              </component>
-              <component id="78913" class="javax.swing.JTextField" binding="nombreEditField">
-                <constraints>
-                  <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <caretColor color="-592129"/>
-                  <text value="&quot;nombre&quot;"/>
-                </properties>
-              </component>
-              <component id="3328f" class="javax.swing.JButton" binding="confirmarButton">
-                <constraints>
-                  <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-16777216"/>
-                  <foreground color="-3838465"/>
-                  <text value="CONFIRMAR"/>
-                </properties>
-              </component>
-              <component id="cecb8" class="javax.swing.JButton" binding="editarButton">
-                <constraints>
-                  <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-16777216"/>
-                  <foreground color="-3838465"/>
-                  <text value="EDITAR"/>
-                </properties>
-              </component>
-              <vspacer id="ee158">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <hspacer id="ddba">
-                <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
-              <hspacer id="2647f">
-                <constraints>
-                  <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
             </children>
           </grid>
           <grid id="72e23" binding="miIndoorPane" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="miIndoor"/>
+              <tabbedpane title="Mi Indoor"/>
             </constraints>
             <properties>
               <background color="-15658735"/>

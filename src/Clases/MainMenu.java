@@ -4,6 +4,8 @@ import UserRelated.IndoorConfig;
 import UserRelated.User;
 
 import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -40,7 +42,6 @@ public class MainMenu extends JFrame {
     private JTable gensBankTable;
     private JButton cargarBancoDeGeneticasButton;
     private JLabel cantComprarLabel;
-    private JButton buscarButton;
     private JButton editarButton;
     private JButton confirmarButton;
     private JTextField stockField;
@@ -291,12 +292,41 @@ public class MainMenu extends JFrame {
             @Override
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
-                if (usuario.getId() <= 0) {
+                if (usuario == null || usuario.getId() <= 0) {
                     JOptionPane.showMessageDialog(null, "Tabla MisGeneticas solo para Usuarios logueados.");
                 }
             }
         });
 
+
+        buscarField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (usuario != null && !(usuario.getId() <= 0)) {
+                    String auxN = buscarField.getText();
+                    if (auxN.isEmpty()) listarGensUser();
+                    else {
+                        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Raza", "THC", "Comentarios"}, 0) {
+                            public boolean isCellEditable(int row, int column) {
+                                return false;
+                            }
+                        };
+
+                            Iterator entries = cbSyst.getCepasUserIterator(usuario.getId());
+                            while (entries.hasNext()) {
+                                Map.Entry entry = (Map.Entry) entries.next();
+                                String key = (String) entry.getKey();
+                                Cepa value = (Cepa) entry.getValue();
+                                if (value.getNombre().equalsIgnoreCase(auxN))
+                                model.addRow(new Object[]{key, value.getRaza(), value.getThc(), value.getComentarios()});
+                            }
+
+
+                        gensTable.setModel(model);
+                    }
+                } else JOptionPane.showMessageDialog(null,"Usuario no ingresado.");
+            }
+        });
     }
 
     public boolean checkUserGens() {
@@ -304,7 +334,7 @@ public class MainMenu extends JFrame {
     }
 
     public void agregarGenButtonLogic() {  //Logica del boton Agregar Genetica.
-        if (usuario.getId() >= 1) { //Corrobora si es un usuario logueado mediante ID.
+        if (usuario != null && usuario.getId() >= 1) { //Corrobora si es un usuario logueado mediante ID.
             if (!nombreField.getText().isEmpty() && !thcField.getText().isEmpty() && !razaField.getText().isEmpty()) {
                 String nombre = nombreField.getText();
                 String raza = razaField.getText();
@@ -370,7 +400,6 @@ public class MainMenu extends JFrame {
                 model.addRow(new Object[]{key, value.getRaza(), value.getThc(), value.getComentarios()});
             }
         } else System.out.println("Usuario no ingresado.");
-
         gensTable.setModel(model);
     }
 
