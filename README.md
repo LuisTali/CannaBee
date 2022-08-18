@@ -31,7 +31,7 @@ If you are logged in with and admin account you will see the "Cargar Banco de Ge
 ![bancosAdminLogged](https://user-images.githubusercontent.com/101566196/185270876-4cf1bf3b-b06c-4e2b-8fd4-5d9a7b54057c.png)
 
 
-Complete the requested data and the new genetic will be added to the tabble and also the info of the Seed Bank will be saves into a table on MySQL.
+Complete the requested data and the new genetic will be added to the tabble and also the info of the Seed Bank will be saved into a table on MySQL.
 
 ![registerGen](https://user-images.githubusercontent.com/101566196/185270977-a750d9a4-928c-44fa-b533-795e360468ca.png)
 
