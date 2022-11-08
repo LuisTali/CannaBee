@@ -10,7 +10,6 @@ public class Cepa implements Serializable {
     private String comentarios;
     private String banco;
     private Integer stock;
-
     public Cepa() {
     }
 

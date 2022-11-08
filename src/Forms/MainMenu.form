@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Clases.MainMenu">
   <grid id="27dc6" binding="MainMenuPane" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+    <margin top="20" left="10" bottom="20" right="10"/>
     <constraints>
       <xy x="20" y="59" width="664" height="572"/>
     </constraints>
     <properties>
-      <background color="-10970050"/>
+      <background color="-15456236"/>
     </properties>
     <border type="none"/>
     <children>
@@ -24,7 +24,7 @@
         </border>
         <children>
           <grid id="1e023" binding="añadirPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+            <margin top="20" left="10" bottom="20" right="10"/>
             <constraints>
               <tabbedpane title="Añadir"/>
             </constraints>
@@ -34,7 +34,7 @@
             <border type="none"/>
             <children>
               <grid id="36820" layout-manager="GridLayoutManager" row-count="6" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+                <margin top="10" left="5" bottom="10" right="5"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -71,7 +71,7 @@
                   </hspacer>
                   <component id="a4f1e" class="javax.swing.JLabel" binding="thcLabel">
                     <constraints>
-                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-592129"/>
@@ -81,7 +81,7 @@
                   </component>
                   <component id="50700" class="javax.swing.JLabel" binding="nombreLabel">
                     <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-592129"/>
@@ -115,15 +115,21 @@
                   </component>
                   <component id="4044a" class="javax.swing.JTextArea" binding="commentsArea">
                     <constraints>
-                      <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
                       </grid>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <background color="-15856114"/>
+                      <font name="Consolas"/>
+                      <foreground color="-592129"/>
+                      <lineWrap value="false"/>
+                      <margin top="5" left="3" bottom="5" right="3"/>
+                    </properties>
                   </component>
                   <component id="40f85" class="javax.swing.JLabel" binding="comentsLabel">
                     <constraints>
-                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <foreground color="-592129"/>
@@ -132,7 +138,7 @@
                   </component>
                   <component id="75e98" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <background color="-592129"/>
@@ -158,7 +164,7 @@
             </children>
           </grid>
           <grid id="bf3b6" binding="bancosPane" layout-manager="GridLayoutManager" row-count="10" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+            <margin top="20" left="10" bottom="20" right="10"/>
             <constraints>
               <tabbedpane title="Bancos Semillas"/>
             </constraints>
@@ -285,7 +291,7 @@
             </children>
           </grid>
           <grid id="a8e2e" binding="geneticasPane" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+            <margin top="20" left="10" bottom="20" right="10"/>
             <constraints>
               <tabbedpane title="Mis Geneticas"/>
             </constraints>
@@ -440,7 +446,7 @@
             </children>
           </grid>
           <grid id="72e23" binding="miIndoorPane" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+            <margin top="20" left="10" bottom="20" right="10"/>
             <constraints>
               <tabbedpane title="Mi Indoor"/>
             </constraints>

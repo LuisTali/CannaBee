@@ -7,8 +7,7 @@ public class User {
     private String password;
     private boolean isAdmin;
 
-    public User() {
-    }
+    public User() {}
 
     public User(String nombre, String email, String password, boolean isAdmin) {
         this.nombre = nombre;

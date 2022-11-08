@@ -69,15 +69,24 @@ public class MainMenu extends JFrame {
         cbSyst.cepasReadFile(); //Lee el archivo Cepas.bin y carga la coleccion CepasUser.
         cbSyst.configsReadFile();
         cbSyst.cepasBanksReadSQL();
+
         listarBancoBox();
         llenarListas(); //Les da el formato a las listas y tambien las llena. Este metodo quedaria obsoleto al pedirle al LogIn que lo haga antes.
+
         setearConfigIndoor(); //Carga los labels con la info del indoor.
-        setContentPane(MainMenuPane);
+
+        setContentPane(MainMenuPane); //Setea el main con contenido para mostrar.
+
         setMinimumSize(new Dimension(650, 650));
         setLocationRelativeTo(null); //Centra en el medio
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); //Indica que sucede al cliquear el boton X.
+
         commentsArea.setLineWrap(true); //Corta la palabra al escribir y llegar al final en el TextArea Comments.
+
+        //commentsArea.setMaximumSize(new Dimension(150,100)); Ver como hacer para que al escribir no se agrande solo.
+
+        commentsArea.setBorder(BorderFactory.createLineBorder(new Color(20,40,20),4)); //Crea el borde y se lo setea a la area de comentarios en añadirGenetica.
 
         logInButton.addActionListener(new ActionListener() {
             @Override
